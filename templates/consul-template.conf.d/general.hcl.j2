@@ -1,0 +1,59 @@
+# {{ ansible_managed }}
+consul {
+  auth {
+    enabled  = {{ consul_template_configuration.auth.enabled | default(False) }}
+    username = "{{ consul_template_configuration.auth.username }}"
+    password = "{{ consul_template_configuration.auth.password }}"
+  }
+  address = "{{ consul_template_configuration.server | default("127.0.0.1:8500") }}"
+  {% if consul_template_configuration.token is defined and consul_template_configuration.token %}
+  token   = "{{ consul_template_configuration.token }}"
+  {% endif %}
+  retry {
+    enabled   = {{ consul_template_configuration.retry.enabled }}
+    attempts  = {{ consul_template_configuration.retry.attempts }}
+    # time to sleep between retry attempts, exponent of 2
+    # for 5 retries, the sleep times would be: 250ms, 500ms, 1s, 2s, then 4s
+    backoff = "{{ consul_template_configuration.retry.backoff }}"
+    # if max_backoff is set to 10s and backoff is set to 1s, sleep times
+    # would be: 1s, 2s, 4s, 8s, 10s, 10s,...
+    max_backoff = "{{ consul_template_configuration.retry.max_backoff }}"
+  }
+  ssl {
+    {% if consul_template_configuration.ssl.enabled is defined and consul_template_configuration.enabled %}
+      enabled = true
+      verify = {{ consul_template_configuration.ssl.enabled }}
+      cert = "{{ consul_template_configuration.ssl.cert | mandatory() }}"
+      key  = "{{ consul_template_configuration.ssl.key | mandatory() }}"
+      ca_cert = "{{ consul_template_configuration.ssl.ca_cert | mandatory() }}"
+      # PEM-encoded CA cert files.
+      # If both `ca_cert` and `ca_path` is specified, `ca_cert` is preferred.
+      ca_path = "{{ consul_template_configuration.ssl.ca_path | mandatory() }}"
+      # SNI server name to use for validation.
+      server_name = "{{ consul_template_configuration.ssl.sni | mandatory() }}"
+    {% else %}
+      enabled = false
+    {% endif %}
+  }
+}
+
+reload_signal = "SIGHUP"
+kill_signal = "SIGINT"
+max_stale = "10m"
+log_level = "{{ consul_template_configuration.log.level }}"
+pid_file = "/path/to/pid"
+
+wait {
+  min = "5s"
+  max = "10s"
+}
+
+syslog {
+  enabled = {{ consul_template_configuration.log.syslog.enabled | default(True) }}
+  facility = "{{ consul_template_configuration.log.syslog.facility | default("LOCAL5") }}"
+}
+
+deduplicate {
+  enabled = {{ consul_template_configuration.dedup.enabled | default(True) }}
+  prefix = "{{ consul_template_configuration.dedup.prefix | default("consul-template/dedup/") }}"
+}
