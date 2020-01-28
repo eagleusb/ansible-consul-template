@@ -11,10 +11,10 @@ consul_template:
 # type: dict
 # descr:
 consul_template_release:
-  url: >
-    {{ consul_template.url }}/
-    {{ consul_template.version}}/
-    consul-template_{{ consul_template.version }}_{{ consul_template.arch }}.tgz
+  url:
+    "{{ consul_template.url }}/\
+    {{ consul_template.version}}/\
+    consul-template_{{ consul_template.version }}_{{ consul_template.arch }}.tgz"
   checksum: "d2d01980667c712452376922946671c5630cf36b065c363e2af84f8c1383aaf2"
 
 # type: list
@@ -33,22 +33,27 @@ consul_template_directories:
 # descr:
 consul_template_server: "127.0.0.1:8500"
 
+# type: list
+# descr:
+consul_template_managed_configs:
+  - "general.hcl"
+
 # type: dict
 # descr:
 consul_template_configuration:
   auth:
-    enabled: false
+    enabled: "false"
     username:
     password:
-  server: "{{ consul_template_server | default("127.0.0.1:8500") }}"
+  server: "{{ consul_template_server }}"
   retry:
-    enabled: true
+    enabled: "true"
     attempts: 12
     backoff: "250ms"
     max_backoff: "1m"
   ssl:
-    enabled: false
-    verify: false
+    enabled: "false"
+    verify: "false"
     cert:
     key:
     ca_cert:
@@ -57,8 +62,8 @@ consul_template_configuration:
   log:
     level: "warn"
     syslog:
-      enabled: true
+      enabled: "true"
       facility: "LOCAL5"
   dedup:
-    enabled: true
+    enabled: "true"
     prefix: "consul-template/dedup/"

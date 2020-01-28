@@ -1,7 +1,7 @@
 # {{ ansible_managed }}
 consul {
   auth {
-    enabled  = {{ consul_template_configuration.auth.enabled | default(False) }}
+    enabled  = {{ consul_template_configuration.auth.enabled | default("false") }}
     username = "{{ consul_template_configuration.auth.username }}"
     password = "{{ consul_template_configuration.auth.password }}"
   }
@@ -20,9 +20,9 @@ consul {
     max_backoff = "{{ consul_template_configuration.retry.max_backoff }}"
   }
   ssl {
-    {% if consul_template_configuration.ssl.enabled is defined and consul_template_configuration.enabled %}
+    {% if consul_template_configuration.ssl.enabled is defined and consul_template_configuration.ssl.enabled %}
       enabled = true
-      verify = {{ consul_template_configuration.ssl.enabled }}
+      verify = {{ consul_template_configuration.ssl.verify }}
       cert = "{{ consul_template_configuration.ssl.cert | mandatory() }}"
       key  = "{{ consul_template_configuration.ssl.key | mandatory() }}"
       ca_cert = "{{ consul_template_configuration.ssl.ca_cert | mandatory() }}"
@@ -41,7 +41,7 @@ reload_signal = "SIGHUP"
 kill_signal = "SIGINT"
 max_stale = "10m"
 log_level = "{{ consul_template_configuration.log.level }}"
-pid_file = "/path/to/pid"
+pid_file = "/run/consul-template.pid"
 
 wait {
   min = "5s"
@@ -49,11 +49,11 @@ wait {
 }
 
 syslog {
-  enabled = {{ consul_template_configuration.log.syslog.enabled | default(True) }}
+  enabled = {{ consul_template_configuration.log.syslog.enabled | default("true") }}
   facility = "{{ consul_template_configuration.log.syslog.facility | default("LOCAL5") }}"
 }
 
 deduplicate {
-  enabled = {{ consul_template_configuration.dedup.enabled | default(True) }}
+  enabled = {{ consul_template_configuration.dedup.enabled | default("true") }}
   prefix = "{{ consul_template_configuration.dedup.prefix | default("consul-template/dedup/") }}"
 }
