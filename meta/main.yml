@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Leslie-Alexandre DENIS
+  description: Deploy and configure consul-template
+  license: MIT
+  min_ansible_version: 2.7
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+  galaxy_tags:
+    - system
+    - service-discovery
+    - consul
+    - consul-template
+dependencies: []
