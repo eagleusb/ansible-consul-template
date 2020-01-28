@@ -1,0 +1,7 @@
+---
+
+- name: "consul-template | consul-template install"
+  include_tasks: install.yml
+
+- name: "consul-template | consul-template config"
+  include_tasks: config.yml

@@ -1,0 +1,64 @@
+---
+# type: dict
+# descr:
+consul_template:
+  version: "0.24.1"
+  arch: "linux_amd64"
+  url: "https://releases.hashicorp.com/consul-template"
+  user: consul
+  group: consul
+
+# type: dict
+# descr:
+consul_template_release:
+  url: >
+    {{ consul_template.url }}/
+    {{ consul_template.version}}/
+    consul-template_{{ consul_template.version }}_{{ consul_template.arch }}.tgz
+  checksum: "d2d01980667c712452376922946671c5630cf36b065c363e2af84f8c1383aaf2"
+
+# type: list
+# descr:
+consul_template_directories:
+  - name: "home"
+    path: "/etc/consul"
+  - name: "config"
+    path: "/etc/consul/consul-template.conf.d"
+  - name: "template"
+    path: "/etc/consul/consul-template.d"
+  - name: "log"
+    path: "/var/log/consul"
+
+# type: string
+# descr:
+consul_template_server: "127.0.0.1:8500"
+
+# type: dict
+# descr:
+consul_template_configuration:
+  auth:
+    enabled: false
+    username:
+    password:
+  server: "{{ consul_template_server | default("127.0.0.1:8500") }}"
+  retry:
+    enabled: true
+    attempts: 12
+    backoff: "250ms"
+    max_backoff: "1m"
+  ssl:
+    enabled: false
+    verify: false
+    cert:
+    key:
+    ca_cert:
+    ca_path:
+    sni:
+  log:
+    level: "warn"
+    syslog:
+      enabled: true
+      facility: "LOCAL5"
+  dedup:
+    enabled: true
+    prefix: "consul-template/dedup/"
