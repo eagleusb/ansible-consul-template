@@ -1,0 +1,40 @@
+---
+- name: "consul-template | create dedicated group"
+  group:
+    name: "{{ consul_template.user }}"
+
+- name: "consul-template | create dedicated user"
+  user:
+    name: "{{ consul_template.user }}"
+    group: "{{ consul_template.group }}"
+
+- name: "consul-template | create dedicated directories"
+  file:
+    state: directory
+    path: "{{ _directory.path }}"
+    owner: "{{ consul_template.user }}"
+    group: "{{ consul_template.group }}"
+  loop: "{{ consul_template_directories }}"
+  loop_control:
+    label: "{{ _directory.name }}"
+    loop_var: _directory
+
+
+- name: "consul-template | download consul-template"
+  unarchive:
+    src: "{{ consul_template_release.url }}"
+    remote_src: yes
+    dest: "/usr/local/bin"
+    creates: "/usr/local/bin/consul-template"
+    owner: "{{ consul_template.user }}"
+    group: "{{ consul_template.group }}"
+
+# TODO systemd
+# - name: "consul-template | manage systemd unit"
+#   template:
+#     src: etc/systemd/systemd/foobar
+#     dest: "/etc/systemd/systemd/foobar"
+#     owner: root
+#     group: root
+#     mode: 0644
+#   notify: ""
