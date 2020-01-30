@@ -13,3 +13,13 @@
   loop: "{{ consul_template_managed_configs }}"
   loop_control:
     loop_var: _config
+
+- name: "consul-template | deploy and enable systemd unit"
+  template:
+    src: "consul-template.systemd.j2"
+    dest: "/etc/systemd/system/consul-template.service"
+    owner: root
+    group: root
+    mode: 0640
+    # validate: "systemd-analyze verify consul-template.service"
+  notify: "enable and start consul-template service"

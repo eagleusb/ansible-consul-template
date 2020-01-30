@@ -1,0 +1,22 @@
+[Unit]
+# {{ ansible_managed }}
+Description=consul-template daemon service
+Wants=basic.target
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User={{ consul_template.user }}
+Group={{ consul_template.group }}
+ExecStart={{ consul_template_directories.bin }}/consul-template \
+  -config {{ consul_template_directories.config }} {{ consul_template_unit.args }}
+SuccessExitStatus=12
+ExecReload=/bin/kill -SIGHUP $MAINPID
+ExecStop=/bin/kill -SIGINT $MAINPID
+KillMode=process
+Restart=always
+RestartSec={{ consul_template_unit.restart_after }}
+LimitNOFILE=4096
+
+[Install]
+WantedBy=multi-user.target
