@@ -17,17 +17,23 @@ consul_template_release:
     consul-template_{{ consul_template.version }}_{{ consul_template.arch }}.tgz"
   checksum: "d2d01980667c712452376922946671c5630cf36b065c363e2af84f8c1383aaf2"
 
-# type: list
+# type: dict
+# descr:
+consul_template_unit:
+  binary: "consul-template"
+  args:
+  restart_after: "60s"
+
+
+# type: dict
 # descr:
 consul_template_directories:
-  - name: "home"
-    path: "/etc/consul"
-  - name: "config"
-    path: "/etc/consul/consul-template.conf.d"
-  - name: "template"
-    path: "/etc/consul/consul-template.d"
-  - name: "log"
-    path: "/var/log/consul"
+  bin: "/usr/local/bin"
+  home: "/etc/consul"
+  config: "/etc/consul/consul-template.conf.d"
+  template: "/etc/consul/consul-template.d"
+  log: "/var/log/consul"
+  pid: "/run/consul"
 
 # type: string
 # descr:

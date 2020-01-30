@@ -20,7 +20,7 @@ consul {
     max_backoff = "{{ consul_template_configuration.retry.max_backoff }}"
   }
   ssl {
-    {% if consul_template_configuration.ssl.enabled is defined and consul_template_configuration.ssl.enabled %}
+    {% if consul_template_configuration.ssl.enabled is defined and consul_template_configuration.ssl.enabled == "true" %}
       enabled = true
       verify = {{ consul_template_configuration.ssl.verify }}
       cert = "{{ consul_template_configuration.ssl.cert | mandatory() }}"
@@ -41,7 +41,7 @@ reload_signal = "SIGHUP"
 kill_signal = "SIGINT"
 max_stale = "10m"
 log_level = "{{ consul_template_configuration.log.level }}"
-pid_file = "/run/consul-template.pid"
+pid_file = "{{ consul_template_directories.pid }}/consul-template.pid"
 
 wait {
   min = "5s"
