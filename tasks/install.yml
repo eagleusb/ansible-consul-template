@@ -11,12 +11,12 @@
 - name: "consul-template | create dedicated directories"
   file:
     state: directory
-    path: "{{ _directory.path }}"
+    path: "{{ _directory.value }}"
     owner: "{{ consul_template.user }}"
     group: "{{ consul_template.group }}"
-  loop: "{{ consul_template_directories }}"
+  loop: "{{ consul_template_directories | dict2items }}"
   loop_control:
-    label: "{{ _directory.name }}"
+    label: "{{ _directory.key }}"
     loop_var: _directory
 
 
@@ -24,17 +24,7 @@
   unarchive:
     src: "{{ consul_template_release.url }}"
     remote_src: yes
-    dest: "/usr/local/bin"
-    creates: "/usr/local/bin/consul-template"
+    dest: "{{ consul_template_directories.bin }}"
+    creates: "{{ consul_template_directories.bin }}/consul-template"
     owner: "{{ consul_template.user }}"
     group: "{{ consul_template.group }}"
-
-# TODO systemd
-# - name: "consul-template | manage systemd unit"
-#   template:
-#     src: etc/systemd/systemd/foobar
-#     dest: "/etc/systemd/systemd/foobar"
-#     owner: root
-#     group: root
-#     mode: 0644
-#   notify: ""
