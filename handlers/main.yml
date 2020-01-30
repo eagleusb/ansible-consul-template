@@ -1,0 +1,13 @@
+---
+- name: "enable consul-template service"
+  systemd:
+    name: "consul-template"
+    daemon_reload: yes
+    enabled: yes
+  listen: "enable and start consul-template service"
+
+- name: "start consul-template service"
+  systemd:
+    name: "consul-template"
+    state: started
+  listen: "enable and start consul-template service"
