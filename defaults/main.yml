@@ -1,6 +1,6 @@
 ---
 # type: dict
-# descr:
+# descr: version and installation source
 consul_template:
   version: "0.24.1"
   arch: "linux_amd64"
@@ -9,7 +9,7 @@ consul_template:
   group: consul
 
 # type: dict
-# descr:
+# descr: release source for download
 consul_template_release:
   url:
     "{{ consul_template.url }}/\
@@ -18,7 +18,7 @@ consul_template_release:
   checksum: "d2d01980667c712452376922946671c5630cf36b065c363e2af84f8c1383aaf2"
 
 # type: dict
-# descr:
+# descr: systemd service details
 consul_template_unit:
   binary: "consul-template"
   args:
@@ -26,7 +26,7 @@ consul_template_unit:
 
 
 # type: dict
-# descr:
+# descr: dedicated directories for consul-template
 consul_template_directories:
   bin: "/usr/local/bin"
   home: "/etc/consul"
@@ -36,16 +36,16 @@ consul_template_directories:
   pid: "/run/consul"
 
 # type: string
-# descr:
+# descr: consul server address
 consul_template_server: "127.0.0.1:8500"
 
 # type: list
-# descr:
+# descr: consul template managed configuration(s) files
 consul_template_managed_configs:
   - "general.hcl"
 
 # type: dict
-# descr:
+# descr: general configuration for consul template
 consul_template_configuration:
   auth:
     enabled: "false"
