@@ -5,3 +5,11 @@
 
 - name: "consul-template | consul-template config"
   include_tasks: config.yml
+
+
+- name: "consul-template | consul-template managed templates"
+  import_tasks: template.yml
+  when:
+    - consul_template_managed_templates is defined
+    - consul_template_managed_templates is sequence()
+    - consul_template_managed_templates | length() > 0

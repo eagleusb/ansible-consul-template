@@ -8,8 +8,8 @@ After=network-online.target
 [Service]
 User={{ consul_template.user }}
 Group={{ consul_template.group }}
-ExecStart={{ consul_template_directories.bin }}/consul-template \
-  -config {{ consul_template_directories.config }} {{ consul_template_unit.args }}
+ExecStart={{ consul_template_directories.bin }}/consul-template\
+ -config {{ consul_template_directories.config }} {{ consul_template_unit.args }}
 SuccessExitStatus=12
 ExecReload=/bin/kill -SIGHUP $MAINPID
 ExecStop=/bin/kill -SIGINT $MAINPID

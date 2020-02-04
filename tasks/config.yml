@@ -3,7 +3,7 @@
 - name: "consul-template | generate configuration fragments"
   template:
     src: "consul-template.conf.d/{{ _config }}.j2"
-    dest: "/etc/consul/consul-template.conf.d/{{ _config }}"
+    dest: "{{ consul_template_directories.config }}/{{ _config }}"
     owner: "{{ consul_template.user }}"
     group: "{{ consul_template.group }}"
     mode: 0640

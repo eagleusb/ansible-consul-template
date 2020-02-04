@@ -38,6 +38,12 @@ Consul server address and consul-template configuration can be overrided with:
 ```yaml
 consul_template_server: "1.2.3.4:8500"
 
+consul_template_managed_templates:
+  - name: "nginx"
+    src: "/tmp/nginx.ctmpl"
+    dst: "/var/nginx/nginx.conf"
+    cmd: "nginx -s reload"
+
 consul_template_configuration:
   auth:
     enabled: false
