@@ -1,0 +1,12 @@
+---
+
+- name: "consul-template | generate managed templates definitions"
+  template:
+    src: "consul-template.conf.d/template.hcl.j2"
+    dest: "{{ consul_template_directories.config }}/{{ _template.name }}.hcl"
+    owner: "{{ consul_template.user }}"
+    group: "{{ consul_template.group }}"
+    mode: 0640
+  loop: "{{ consul_template_managed_templates }}"
+  loop_control:
+    loop_var: _template

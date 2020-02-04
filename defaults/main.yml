@@ -44,6 +44,10 @@ consul_template_server: "127.0.0.1:8500"
 consul_template_managed_configs:
   - "general.hcl"
 
+# type: list
+# descr: list of managed templates by consul template
+consul_template_managed_templates: []
+
 # type: dict
 # descr: general configuration for consul template
 consul_template_configuration:
