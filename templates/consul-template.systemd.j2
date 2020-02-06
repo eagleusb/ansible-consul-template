@@ -14,6 +14,7 @@ SuccessExitStatus=12
 ExecReload=/bin/kill -SIGHUP $MAINPID
 ExecStop=/bin/kill -SIGINT $MAINPID
 KillMode=process
+PIDFile={{ consul_template_directories.pid }}/consul-template.pid
 Restart=always
 RestartSec={{ consul_template_unit.restart_after }}
 LimitNOFILE=4096
