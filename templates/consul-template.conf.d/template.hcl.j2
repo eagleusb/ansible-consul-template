@@ -4,10 +4,14 @@ template {
   destination = "{{ _template.dst | mandatory() }}"
   create_dest_dirs = true
   #contents = "|| keyOrDefault "service/redis/maxconns@east-aws" "5" ||"
-  #command = "restart service foo"
+{% if _template.cmd is defined and _template.cmd|length %}
+  command = "{{ _template.cmd}}"
+{% else %}
+  #command= "" 
+{% endif %}
   command_timeout = "60s"
   error_on_missing_key = false
-  perms = 0600
+  perms  = {{ _template.mode | default ("0600") }}
   backup = true
   left_delimiter  = "||"
   right_delimiter = "||"
