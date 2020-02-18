@@ -36,6 +36,7 @@ see [defaults/main.yml/consul_template_configurations](./defaults/main.yml)
 
 Consul server address and consul-template configuration can be overrided with:
 ```yaml
+
 consul_template_server: "1.2.3.4:8500"
 
 consul_template_managed_templates:
@@ -43,13 +44,14 @@ consul_template_managed_templates:
     src: "/tmp/nginx.ctmpl"
     dst: "/var/nginx/nginx.conf"
     cmd: "nginx -s reload"
+    mode: "0644"
 
 consul_template_configuration:
   auth:
     enabled: false
     username:
     password:
-  server: "{{ consul_template_server | default("127.0.0.1:8500") }}"
+  server: "{{ consul_template_server | default('127.0.0.1:8500') }}"
   retry:
     enabled: true
     attempts: 12
@@ -78,6 +80,7 @@ consul_template_configuration:
 Use default configuration, means that nothing will be done.
 
 ```yaml
+
 - hosts: localhost
   roles:
     - ansible-consul-template
