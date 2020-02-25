@@ -41,7 +41,7 @@ reload_signal = "SIGHUP"
 kill_signal = "SIGINT"
 max_stale = "10m"
 log_level = "{{ consul_template_configuration.log.level }}"
-pid_file = "{{ consul_template_directories.pid }}/consul-template.pid"
+pid_file = "/tmp/consul-template.pid"
 
 wait {
   min = "5s"

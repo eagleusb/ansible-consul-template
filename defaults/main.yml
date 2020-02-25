@@ -24,7 +24,6 @@ consul_template_unit:
   args:
   restart_after: "60s"
 
-
 # type: dict
 # descr: dedicated directories for consul-template
 consul_template_directories:
@@ -33,7 +32,6 @@ consul_template_directories:
   config: "/etc/consul/consul-template.conf.d"
   template: "/etc/consul/consul-template.d"
   log: "/var/log/consul"
-  pid: "/tmp/consul-template"
 
 # type: string
 # descr: consul server address
